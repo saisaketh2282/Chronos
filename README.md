@@ -74,7 +74,6 @@ npm start
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8080
 - **Kafka UI**: http://localhost:8081
-- **Splunk** (if enabled): http://localhost:8000
 
 ## 🔧 Configuration
 
@@ -235,32 +234,6 @@ JWT_SECRET=your_jwt_secret
    npm install
    ```
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 Support
-
-For support and questions:
-- Create an issue in the GitHub repository
-- Check the [setup-guide.md](setup-guide.md) for detailed instructions
-- Review the troubleshooting section above
-
-## 🎯 Roadmap
-
-- [ ] Kubernetes deployment manifests
-- [ ] Prometheus metrics integration
-- [ ] Advanced job scheduling (cron expressions)
-- [ ] Job dependency management
-- [ ] Webhook notifications
 - [ ] Job templates and workflows
 
 ---
