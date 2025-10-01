@@ -73,6 +73,7 @@ npm start
 ### 5. Access the Application
 - **Frontend**: http://localhost:3000
 - **Backend API**: http://localhost:8080
+- **Health Check**: http://localhost:8080/api/health
 - **Kafka UI**: http://localhost:8081
 
 ## 🔧 Configuration
@@ -186,7 +187,9 @@ JWT_SECRET=your_jwt_secret
 - **Splunk**: http://localhost:8000 - Centralized logging (optional)
 
 ### Health Checks
-- **Backend Health**: GET http://localhost:8080/actuator/health
+- **Backend Health**: GET http://localhost:8080/api/health
+- **Readiness Check**: GET http://localhost:8080/api/health/ready (includes database connectivity)
+- **Liveness Check**: GET http://localhost:8080/api/health/live
 - **Database**: Automatic health checks in Docker Compose
 - **Kafka**: Built-in health checks
 

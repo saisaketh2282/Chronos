@@ -1,10 +1,13 @@
 package com.Prod.Chronos.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +15,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/health")
 public class HealthController {
+
+    @Autowired
+    private DataSource dataSource;
 
     @GetMapping
     public ResponseEntity<Map<String, Object>> health() {
@@ -27,13 +33,25 @@ public class HealthController {
     @GetMapping("/ready")
     public ResponseEntity<Map<String, Object>> readiness() {
         Map<String, Object> readiness = new HashMap<>();
-        readiness.put("status", "READY");
+        Map<String, String> checks = new HashMap<>();
+        
+        // Check database connectivity
+        try (Connection connection = dataSource.getConnection()) {
+            checks.put("database", connection.isValid(5) ? "UP" : "DOWN");
+        } catch (Exception e) {
+            checks.put("database", "DOWN");
+        }
+        
+        // For now, assume Kafka and Splunk are UP (in a real implementation, 
+        // you would check actual connectivity)
+        checks.put("kafka", "UP");
+        checks.put("splunk", "UP");
+        
+        boolean allUp = checks.values().stream().allMatch(status -> "UP".equals(status));
+        
+        readiness.put("status", allUp ? "READY" : "NOT_READY");
         readiness.put("timestamp", LocalDateTime.now());
-        readiness.put("checks", Map.of(
-            "database", "UP",
-            "kafka", "UP",
-            "splunk", "UP"
-        ));
+        readiness.put("checks", checks);
         
         return ResponseEntity.ok(readiness);
     }
