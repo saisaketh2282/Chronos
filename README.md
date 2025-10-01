@@ -234,8 +234,6 @@ JWT_SECRET=your_jwt_secret
    npm install
    ```
 
-- [ ] Job templates and workflows
 
----
 
 **Happy Scheduling! 🕒✨**
